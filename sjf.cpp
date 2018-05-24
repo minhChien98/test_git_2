@@ -17,20 +17,45 @@ struct time{
     int timePro;
 };
 
+
 void nhap(process test[],int &n)
 {
-	cout << "Nhap so tien trinh: ";
-	cin >> n;
-	for(int i = 0; i < n; i++)
-	{
-		cout << "\tNhap tien trinh " << i+1 << endl;
-		cout << "\t\tNhap ten tien trinh: ";
-		fflush(stdin);gets(test[i].pro);
-		cout << "\t\tNhap thoi gian xuat hien: ";
-		cin >> test[i].timeXh;
-		cout << "\t\tNhap thoi gian xu li: ";
-		cin >> test[i].cpuB;
-	}
+    do{
+        cout << "Nhap so tien trinh: ";//Ã­t nháº¥t cÃ³ 2 tiáº¿n trÃ¬nh
+        cin >> n;
+    }while(n<2);
+    int heTienTrinhHopLe=1;
+    do
+    {
+        for(int i = 0; i < n; i++)
+        {
+            int thoiDiemXuatHienHopLe;
+            cout << "\tNhap tien trinh p" << i+1 << endl;
+            test[i].pro = i+1;
+            do
+            {
+                thoiDiemXuatHienHopLe = 1;
+                cout << "\t\tNhap thoi diem xuat hien: ";//thá»i Ä‘iá»ƒm xuáº¥t hiá»‡n >= 0 && thá»i Ä‘iá»ƒm xuáº¥t hiá»‡n cá»§a 2 tiáº¿n trÃ¬nh ko Ä‘Æ°á»£c trÃ¹ng nhau
+                cin >> test[i].timeXh;
+                for(int j=0 ; j < i ; j++)
+                    if(test[i].timeXh == test[j].timeXh)
+                    {
+                        cout << "\t\tTrung thoi diem xuat hien.\n";
+                        thoiDiemXuatHienHopLe = 0;
+                    }
+            }while(test[i].timeXh < 0 || thoiDiemXuatHienHopLe == 0);
+            do
+            {
+                cout << "\t\tNhap thoi gian cap: ";//thá»i gian cáº¥p  >0
+                cin >> test[i].cpuB;
+            }while(test[i].cpuB <= 0);
+        }
+        for(int i = 0 ; i < n ; i++)
+            if(test[i].timeXh == 0)
+                heTienTrinhHopLe = 0;
+        if(heTienTrinhHopLe != 0)
+            cout << "\tHe tien trinh vua nhap khong co tien trinh bat dau o thoi diem 0. Moi nhap lai:\n";
+    }while(heTienTrinhHopLe != 0);
 }
 
 void xuat(process test[], int n)
