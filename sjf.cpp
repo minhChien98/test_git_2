@@ -178,11 +178,13 @@ int main()
 	time tinh[MAX];
 	int n;
 	nhap(test,n);
-	xuat(test, n);
 	sapXep(test,n);
 	xuat(test, n);
 	cout << endl << "=================================" << endl;
 	cout << "Gian do Gantt la: "<< endl;
-	taoGianDoGantt(test,tinh,n);
-	tinhThoiGian(tinh,n);
+	int truee = taoGianDoGantt(test,tinh,n);
+	if(truee == 1)
+        tinhThoiGian(tinh,n);
+	cout << endl;
+	system("pause");
 }
