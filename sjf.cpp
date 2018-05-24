@@ -94,42 +94,69 @@ void KeNgang()
 
 
 
-void taoGianDoGantt(process test[],time tinh[], int n)
+int taoGianDoGantt(process test[],time tinh[], int n)
 {
-    int timeBd = 0, dem = 0, x=n;
+    int timeBd[MAX], dem = 0, x=n;
+    timeBd[0]=0;
+    process danhSach[MAX];
+    int chiSo = 1;
+    int index = 2;
     while(n)
     {
-        if(x==n)
-            cout << "\t" << timeBd;
+
         if(test[0].timeXh == 0)
         {
-            cout <<"\t" << test[0].pro;
-            tinh[dem].timeWait = timeBd - test[0].timeXh;
+
+            tinh[dem].timeWait = timeBd[0] - test[0].timeXh;
             tinh[dem].timePro = tinh[dem].timeWait + test[0].cpuB;
             dem++;
-            timeBd += test[0].cpuB;
+            timeBd[1] = test[0].cpuB;
+            danhSach[0] = test[0];
+
             xoa(test,n,0);
         }
         int minn = test[0].cpuB;
         for(int i = 0; i<n;i++)
-            if(test[i].timeXh < timeBd && minn > test[i].cpuB)
+            if(test[i].timeXh < timeBd[index-1] && minn > test[i].cpuB)
                 minn = test[i].cpuB;
         for(int i = 0; i<n;i++)
-            if(test[i].timeXh < timeBd && minn == test[i].cpuB)
-            {
+        {
+            int demm = 0;
 
-                cout << "\t" << timeBd;
-                cout <<"\t" << test[i].pro;
-                tinh[dem].timeWait =timeBd - test[i].timeXh;
+            if(test[i].timeXh < timeBd[index-1] && test[i].cpuB == minn)
+            {
+                demm++;
+                tinh[dem].timeWait =timeBd[index-1] - test[i].timeXh;
                 tinh[dem].timePro = tinh[dem].timeWait + test[i].cpuB;
                 dem++;
-                timeBd += test[i].cpuB;
+                timeBd[index] = timeBd[index-1] + test[i].cpuB;
+                danhSach[chiSo] = test[i];
+                chiSo++;
                 xoa(test,n,i);
+                break;
             }
-        if(n==0)
-            cout << "\t" << timeBd;
+            if(demm == 0)
+            {
+                cout << "\tBan da nhap 2 he tien trinh.";
+                return 0;
+            }
+        }
+        index +=1 ;
     }
+    for(int i=0;i<x;i++)
+        KeNgang();
+    cout <<endl << "|";
+    for(int i=0;i<x;i++)
+        cout << "\tp" << danhSach[i].pro << "\t|";
+    cout << endl;
+    for(int i=0;i<x;i++)
+        KeNgang();
+    cout << endl;
+    for(int i=0;i<x+1;i++)
+        cout << timeBd[i] << "\t\t";
+    return 1;
 }
+
 
 void tinhThoiGian(time tinh[], int n)
 {
