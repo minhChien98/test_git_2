@@ -62,6 +62,13 @@ void sapXep(process test[], int n)
             }
 }
 
+void KeNgang()
+{
+	cout << "================";
+}
+
+
+
 void taoGianDoGantt(process test[],time tinh[], int n)
 {
     int timeBd = 0, dem = 0, x=n;
